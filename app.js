@@ -7,6 +7,10 @@ let missed = 0;
 const startButton = document.querySelector(".btn__reset");
 const overlay = document.querySelector("#overlay");
 const letterButton = document.querySelectorAll("button");
+const letterClass = document.querySelectorAll(".letter");
+const showClass = document.querySelectorAll(".show");
+const winClass = document.querySelector(".win");
+const loseClass = document.querySelector(".lose");
 
 const phrases = [
   "keep your eyes peeled",
@@ -45,8 +49,6 @@ function addPhraseToDisplay(splitRandomPhrase) {
 }
 
 function checkLetter(letterButton) {
-  // Get the elements with a class of "letter."
-  const letterClass = document.querySelectorAll(".letter");
   /* Check if letter in letterClass match the letter in the button the
   player has chosen. */
   for (i = 0; i < letterClass.length; i += 1) {
@@ -59,6 +61,19 @@ function checkLetter(letterButton) {
     } else {
       return null;
     }
+  }
+}
+
+// Check whether the game has been won or lost.
+function checkWin() {
+  /* Compare number of letters with the class .show with number of letterClass
+  with the class .letters */
+  /* If they are equal, display .win class. If the misses are greater
+  than or equal to 5, display the .lose class */
+  if (letterClass.length === showClass.length) {
+    winClass.style.display = "block";
+  } else if (misses >= 5) {
+    loseClass.style.display = "block";
   }
 }
 
