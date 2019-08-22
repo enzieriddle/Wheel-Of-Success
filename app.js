@@ -5,6 +5,7 @@ const phraseUl = document.querySelector("#phrase ul");
 let missed = 0;
 const startButton = document.querySelector(".btn__reset");
 const overlay = document.querySelector("#overlay");
+const keyrowButton = document.querySelectorAll(".keyrow button");
 
 const phrases = [
   "keep your eyes peeled",
@@ -65,6 +66,11 @@ function checkLetter(letterButton) {
 // Attach a event listener to the “Start Game” button to hide the start screen overlay.
 startButton.addEventListener("click", e => {
   overlay.style.display = "none";
+});
+
+keyrowButton.addEventListener("click", e => {
+  keyrowButton.className = "chosen";
+  keyrowButton.disabled = "true";
 });
 
 /* Function Calls ------------------------------*/
