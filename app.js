@@ -44,17 +44,19 @@ function addPhraseToDisplay(splitRandomPhrase) {
 
 function checkLetter(letterButton) {
   // Get the elements with a class of "letter."
-  const letterClass = document.querySelector(".letter");
+  const letterClass = document.querySelectorAll(".letter");
   /* Check if letter in letterClass match the letter in the button the
   player has chosen. */
-  if (letterButton.textContent === letterClass.textContent) {
-    /* If there is a match, add 'show' class to list item containing
-    that letter. Store the matching letter in a variable.*/
-    letterClass.className = "show";
-    let matchedLetter = letterButton.textContent;
-    return matchedLetter;
-  } else {
-    return null;
+  for (i = 0; i < letterClass.length; i += 1) {
+    if (letterButton.textContent === letterClass[i].textContent) {
+      /* If there is a match, add 'show' class to list item containing
+      that letter. Store the matching letter in a variable.*/
+      letterClass.className = "show";
+      let matchedLetter = letterButton.textContent;
+      return matchedLetter;
+    } else {
+      return null;
+    }
   }
 }
 
