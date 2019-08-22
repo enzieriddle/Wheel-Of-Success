@@ -68,10 +68,15 @@ startButton.addEventListener("click", e => {
   overlay.style.display = "none";
 });
 
+// Use event delegation to listen only to button events from the keyboard.
 for (i = 0; i < keyrowButton.length; i += 1) {
   keyrowButton[i].addEventListener("click", e => {
+    // When a player chooses a letter, add the “chosen” class to that button.
     keyrowButton[i].className = "chosen";
+    // Set button to disabled.
     keyrowButton[i].disabled = "true";
+    let letterFound = checkLetter(keyrowButton[i]);
+    return letterFound;
   });
 }
 
