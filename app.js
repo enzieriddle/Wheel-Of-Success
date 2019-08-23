@@ -85,25 +85,23 @@ startButton.addEventListener("click", e => {
 });
 
 // Use event delegation to listen only to button events from the keyboard.
-for (i = 0; i < letterButton.length; i += 1) {
-  letterButton[i].addEventListener("click", e => {
-    // When a player chooses a letter, add the “chosen” class to that button.
-    letterButton[i].className = "chosen";
-    // Set button to disabled.
-    letterButton[i].disabled = "true";
-    let letterFound = checkLetter(letterButton[i]);
-    // Check the value of the letterFound variable.
-    if (letterFound === "null") {
-      // Create a loop that runs as long as there are still tries left.
-      for (i = 0; i < tries.length; i += 1) {
-        // If the value is null, remove one of the tries from the keyboard.
-        tries[i].remove;
-        // Increase the missed count by 1.
-        missed += 1;
-      }
+qwerty.addEventListener("click", e => {
+  // When a player chooses a letter, add the “chosen” class to that button.
+  e.className = "chosen";
+  // Set button to disabled.
+  e.disabled = "true";
+  let letterFound = checkLetter(e);
+  // Check the value of the letterFound variable.
+  if (letterFound === "null") {
+    // Create a loop that runs as long as there are still tries left.
+    for (i = 0; i < tries.length; i += 1) {
+      // If the value is null, remove one of the tries from the keyboard.
+      tries[i].remove;
+      // Increase the missed count by 1.
+      missed += 1;
     }
-  });
-}
+  }
+});
 
 /* Function Calls ------------------------------*/
 const phraseArray = getRandomPhraseAsArray(phrases);
