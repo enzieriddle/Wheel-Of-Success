@@ -87,9 +87,9 @@ startButton.addEventListener("click", e => {
 // Use event delegation to listen only to button events from the keyboard.
 qwerty.addEventListener("click", e => {
   // When a player chooses a letter, add the “chosen” class to that button.
-  e.className = "chosen";
+  e.target.className = "chosen";
   // Set button to disabled.
-  e.disabled = "true";
+  e.target.disabled = "true";
   let letterFound = checkLetter(e);
   // Check the value of the letterFound variable.
   if (letterFound === "null") {
