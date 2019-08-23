@@ -40,10 +40,10 @@ function addPhraseToDisplay(splitRandomPhrase) {
     phraseUl.append(listItem);
     /* If character is a letter and not a space, add class
        of "letter" to list item.*/
-    if (splitRandomPhrase[i].textContent === "text") {
-      splitRandomPhrase[i].className = "letter";
+    if (listItem[i].textContent === "text") {
+      listItem[i].className = "letter";
     } else {
-      splitRandomPhrase[i].className = "";
+      listItem[i].className = "";
     }
   }
 }
