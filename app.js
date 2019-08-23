@@ -1,5 +1,5 @@
 /* Variables ------------------------------*/
-const qwerty = document.querySelector("#querty");
+const qwerty = document.querySelector("#qwerty");
 const phrase = document.querySelector("#phrase");
 const phraseUl = document.querySelector("#phrase ul");
 let tries = document.querySelectorAll(".tries img");
