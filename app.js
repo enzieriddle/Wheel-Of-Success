@@ -7,7 +7,7 @@ let missed = 0;
 const startButton = document.querySelector(".btn__reset");
 const overlay = document.querySelector("#overlay");
 const letterButton = document.querySelectorAll("button");
-const letterClass = document.querySelectorAll(".letter");
+
 const showClass = document.querySelectorAll(".show");
 const winClass = document.querySelector(".win");
 const loseClass = document.querySelector(".lose");
@@ -21,25 +21,25 @@ const phrases = [
 ];
 
 /* Functions ------------------------------*/
-function getRandomPhraseAsArray(randomPhrase) {
+function getRandomPhraseAsArray(phrases) {
   // Randomly choose phrase from phrases array.
-  randomPhrase = phrases[Math.floor(Math.random() * phrases.length)];
+  phrases = phrases[Math.floor(Math.random() * phrases.length)];
   // Split array into new array of characters.
-  let splitRandomPhrase = randomPhrase.split("");
-  return splitRandomPhrase;
+  let phraseArray = phrases.split("");
+  return phraseArray;
 }
 
-function addPhraseToDisplay(splitRandomPhrase) {
+function addPhraseToDisplay(phraseArray) {
   // Loop through split array.
-  for (i = 0; i < splitRandomPhrase.length; i += 1) {
+  for (i = 0; i < phraseArray.length; i += 1) {
     // Create list item.
     let listItem = document.createElement("li");
     // Put character inside of list item.
-    listItem.append(splitRandomPhrase[i]);
+    listItem.append(phraseArray[i]);
     // Append list item to #phrase <ul> tag.
     phraseUl.append(listItem);
-    /* If character is a letter and not a space, add class
-       of "letter" to list item.*/
+    /* If character is a space, add class of 'space'
+       to list item. If not, add class of 'letter'.*/
     if (listItem.textContent === " ") {
       listItem.className = "space";
     } else {
@@ -49,6 +49,7 @@ function addPhraseToDisplay(splitRandomPhrase) {
 }
 
 function checkLetter(letterButton) {
+  const letterClass = document.querySelectorAll(".letter");
   /* Check if letter in letterClass match the letter in the button the
   player has chosen. */
   for (i = 0; i < letterClass.length; i += 1) {
@@ -92,7 +93,7 @@ qwerty.addEventListener("click", e => {
   e.target.disabled = "true";
   let letterFound = checkLetter(e);
   // Check the value of the letterFound variable.
-  if (letterFound === "null") {
+  if (letterFound === null) {
     // Create a loop that runs as long as there are still tries left.
     for (i = 0; i < tries.length; i += 1) {
       // If the value is null, remove one of the tries from the keyboard.
@@ -101,6 +102,7 @@ qwerty.addEventListener("click", e => {
       missed += 1;
     }
   }
+  checkWin();
 });
 
 /* Function Calls ------------------------------*/
