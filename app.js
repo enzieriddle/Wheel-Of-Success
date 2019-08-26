@@ -2,13 +2,10 @@
 const qwerty = document.querySelector("#qwerty");
 const phrase = document.querySelector("#phrase");
 const phraseUl = document.querySelector("#phrase ul");
-let tries = document.querySelectorAll(".tries img");
 let missed = 0;
 const startButton = document.querySelector(".btn__reset");
 const overlay = document.querySelector("#overlay");
 const letterButton = document.querySelectorAll("button");
-
-const showClass = document.querySelectorAll(".show");
 const winClass = document.querySelector(".win");
 const loseClass = document.querySelector(".lose");
 
@@ -52,29 +49,42 @@ function checkLetter(letterButton) {
   const letterClass = document.querySelectorAll(".letter");
   /* Check if letter in letterClass match the letter in the button the
   player has chosen. */
+  let matchedLetter = null;
   for (i = 0; i < letterClass.length; i += 1) {
     if (letterButton.textContent === letterClass[i].textContent) {
+      console.log(letterButton.textContent + " " + letterClass[i].textContent);
       /* If there is a match, add 'show' class to list item containing
       that letter. Store the matching letter in a variable.*/
-      letterClass.className = "show";
-      let matchedLetter = letterButton.textContent;
-      return matchedLetter;
-    } else {
-      return null;
+      letterClass[i].classList.add("show");
+      matchedLetter = letterButton.textContent;
     }
   }
+  return matchedLetter;
 }
 
 // Check whether the game has been won or lost.
 function checkWin() {
+  // Select objects that have classes of 'letter' and 'show.'
+  let letterClass = document.querySelectorAll(".letter");
+  const showClass = document.querySelectorAll(".show");
   /* Compare number of letters with the class .show with number of letterClass
   with the class .letters */
   /* If they are equal, display .win class. If the misses are greater
   than or equal to 5, display the .lose class */
   if (letterClass.length === showClass.length) {
-    winClass.style.display = "block";
-  } else if (misses >= 5) {
-    loseClass.style.display = "block";
+    /* Remove 'class' from tag with ID of 'overlay.'
+       Apply '.win' class to tag with ID of 'overlay.' */
+    overlay.removeAttribute("class");
+    overlay.classList.add("win");
+    overlay.style.display = "block";
+  } else if (missed >= 5) {
+    /* Remove 'class' from tag with ID of 'overlay.'
+       Apply '.lose' class to tag with ID of 'overlay.' */
+    overlay.removeAttribute("class");
+    overlay.classList.add("lose");
+    overlay.style.display = "block";
+  } else {
+    overlay.display = "none";
   }
 }
 
@@ -88,21 +98,25 @@ startButton.addEventListener("click", e => {
 // Use event delegation to listen only to button events from the keyboard.
 qwerty.addEventListener("click", e => {
   // When a player chooses a letter, add the “chosen” class to that button.
-  e.target.className = "chosen";
+  e.target.classList.add("chosen");
   // Set button to disabled.
   e.target.disabled = "true";
   let letterFound = checkLetter(e.target);
-  // Check the value of the letterFound variable.
+  /* Check the value of the letterFound variable.
+  If the value is null, increase the 'missed' counter by 1. */
   if (letterFound === null) {
-    // Create a loop that runs as long as there are still tries left.
-    for (i = 0; i < tries.length; i += 1) {
-      // If the value is null, remove one of the tries from the keyboard.
-      tries[i].remove;
+    missed += 1;
+    let liveHeart = document.querySelectorAll(
+      "li img[src='images/liveHeart.png']"
+    );
+    /* Create a loop that runs as long as there are still tries left.
+    remove one of the hearts.*/
+    if (liveHeart.length > 0) {
+      liveHeart[0].setAttribute("src", "images/lostHeart.png");
       // Increase the missed count by 1.
-      missed += 1;
     }
   }
-  // checkWin();
+  checkWin();
 });
 
 /* Function Calls ------------------------------*/
