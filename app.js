@@ -91,7 +91,7 @@ qwerty.addEventListener("click", e => {
   e.target.className = "chosen";
   // Set button to disabled.
   e.target.disabled = "true";
-  let letterFound = checkLetter(e);
+  let letterFound = checkLetter(e.target);
   // Check the value of the letterFound variable.
   if (letterFound === null) {
     // Create a loop that runs as long as there are still tries left.
@@ -102,7 +102,7 @@ qwerty.addEventListener("click", e => {
       missed += 1;
     }
   }
-  checkWin();
+  // checkWin();
 });
 
 /* Function Calls ------------------------------*/
