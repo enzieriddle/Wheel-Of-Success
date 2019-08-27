@@ -5,6 +5,8 @@ const phraseUl = document.querySelector("#phrase ul");
 let missed = 0;
 const startButton = document.querySelector(".btn__reset");
 const overlay = document.querySelector("#overlay");
+const title = document.querySelector(".title");
+const btn__reset = document.querySelector(".btn__reset");
 const letterButton = document.querySelectorAll("button");
 const winClass = document.querySelector(".win");
 const loseClass = document.querySelector(".lose");
@@ -72,20 +74,68 @@ function checkWin() {
   /* If they are equal, display .win class. If the misses are greater
   than or equal to 5, display the .lose class */
   if (letterClass.length === showClass.length) {
-    /* Remove 'class' from tag with ID of 'overlay.'
-       Apply '.win' class to tag with ID of 'overlay.' */
+    // Remove 'class' from tag with ID of 'overlay.'
     overlay.removeAttribute("class");
+    /* Apply '.win' class to tag with ID of 'overlay.'
+       Display overlay with winning text. */
     overlay.classList.add("win");
     overlay.style.display = "block";
+    title.textContent = "You win!";
+    // Reassign textContent of 'Start Game' button.
+    btn__reset.textContent = "Reset Game";
+    // If player clicks on the 'Reset Game' button, run resetGame().
+    btn__reset.addEventListener("click", e => {
+      resetGame();
+    });
   } else if (missed >= 5) {
-    /* Remove 'class' from tag with ID of 'overlay.'
-       Apply '.lose' class to tag with ID of 'overlay.' */
+    // Remove 'class' from tag with ID of 'overlay.'
     overlay.removeAttribute("class");
+    /* Apply '.lose' class to tag with ID of 'overlay.'
+       Display overlay with losing text. */
     overlay.classList.add("lose");
     overlay.style.display = "block";
+    title.textContent = "Better luck next time.";
+    // Reassign textContent of 'Start Game' button.
+    btn__reset.textContent = "Reset Game";
+    // If player clicks on the 'Reset Game' button, run resetGame().
+    btn__reset.addEventListener("click", e => {
+      resetGame();
+    });
   } else {
     overlay.display = "none";
   }
+}
+
+/* Reset the game when the user clicks the 'Reset Game' button
+   after winning or losing. */
+function resetGame() {
+  // Recreate the buttons in the keyboard.
+  qwerty.addEventListener("click", e => {
+    // When a player chooses a letter, add the “chosen” class to that button.
+    e.target.classList.add("chosen");
+    // Set button to disabled.
+    e.target.disabled = "true";
+    let letterFound = checkLetter(e.target);
+    /* Check the value of the letterFound variable.
+    If the value is null, increase the 'missed' counter by 1. */
+    if (letterFound === null) {
+      missed += 1;
+      let liveHeart = document.querySelectorAll(
+        "li img[src='images/liveHeart.png']"
+      );
+      /* Create a loop that runs as long as there are still tries left.
+      remove one of the hearts.*/
+      if (liveHeart.length > 0) {
+        liveHeart[0].setAttribute("src", "images/lostHeart.png");
+        // Increase the missed count by 1.
+      }
+    }
+    checkWin();
+  });
+  // Generate a new random phrase.
+  getRandomPhraseAsArray(phrases);
+  // Set number misse back to zero.
+  let missed = 0;
 }
 
 /* Event Listeners ------------------------------*/
