@@ -74,46 +74,44 @@ function checkWin() {
   /* If they are equal, display .win class. If the misses are greater
   than or equal to 5, display the .lose class */
   if (letterClass.length === showClass.length) {
-    // Remove 'class' from tag with ID of 'overlay.'
-    overlay.removeAttribute("class");
     /* Apply '.win' class to tag with ID of 'overlay.'
        Display overlay with winning text. */
     overlay.classList.add("win");
-    overlay.style.display = "block";
+    overlay.style.display = "";
     title.textContent = "You win!";
     // Reassign textContent of 'Start Game' button.
     btn__reset.textContent = "Reset Game";
     // If player clicks on the 'Reset Game' button, run resetGame().
     btn__reset.addEventListener("click", e => {
-      resetGame();
+      location.reload();
     });
   } else if (missed >= 5) {
-    // Remove 'class' from tag with ID of 'overlay.'
-    overlay.removeAttribute("class");
     /* Apply '.lose' class to tag with ID of 'overlay.'
        Display overlay with losing text. */
     overlay.classList.add("lose");
-    overlay.style.display = "block";
+    overlay.style.display = "";
     title.textContent = "Better luck next time.";
     // Reassign textContent of 'Start Game' button.
     btn__reset.textContent = "Reset Game";
     // If player clicks on the 'Reset Game' button, run resetGame().
     btn__reset.addEventListener("click", e => {
-      resetGame();
+      location.reload();
     });
   } else {
     overlay.display = "none";
   }
 }
 
-/* Reset the game when the user clicks the 'Reset Game' button
-   after winning or losing. */
-function resetGame() {
-  // Generate a new random phrase.
-  const phraseArray = getRandomPhraseAsArray(phrases);
-  addPhraseToDisplay(phraseArray);
-  // Recreate the buttons in the keyboard.
-  qwerty.addEventListener("click", e => {
+/* Event Listeners ------------------------------*/
+
+// Attach a event listener to the “Start Game” button to hide the start screen overlay.
+startButton.addEventListener("click", e => {
+  overlay.style.display = "none";
+});
+
+// Use event delegation to listen only to button events from the keyboard.
+qwerty.addEventListener("click", e => {
+  if (e.target.tagName === "BUTTON") {
     // When a player chooses a letter, add the “chosen” class to that button.
     e.target.classList.add("chosen");
     // Set button to disabled.
@@ -134,40 +132,7 @@ function resetGame() {
       }
     }
     checkWin();
-  });
-  // Set number missed back to zero.
-  let missed = 0;
-}
-
-/* Event Listeners ------------------------------*/
-
-// Attach a event listener to the “Start Game” button to hide the start screen overlay.
-startButton.addEventListener("click", e => {
-  overlay.style.display = "none";
-});
-
-// Use event delegation to listen only to button events from the keyboard.
-qwerty.addEventListener("click", e => {
-  // When a player chooses a letter, add the “chosen” class to that button.
-  e.target.classList.add("chosen");
-  // Set button to disabled.
-  e.target.disabled = "true";
-  let letterFound = checkLetter(e.target);
-  /* Check the value of the letterFound variable.
-  If the value is null, increase the 'missed' counter by 1. */
-  if (letterFound === null) {
-    missed += 1;
-    let liveHeart = document.querySelectorAll(
-      "li img[src='images/liveHeart.png']"
-    );
-    /* Create a loop that runs as long as there are still tries left.
-    remove one of the hearts.*/
-    if (liveHeart.length > 0) {
-      liveHeart[0].setAttribute("src", "images/lostHeart.png");
-      // Increase the missed count by 1.
-    }
   }
-  checkWin();
 });
 
 /* Function Calls ------------------------------*/
