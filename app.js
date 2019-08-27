@@ -109,6 +109,9 @@ function checkWin() {
 /* Reset the game when the user clicks the 'Reset Game' button
    after winning or losing. */
 function resetGame() {
+  // Generate a new random phrase.
+  const phraseArray = getRandomPhraseAsArray(phrases);
+  addPhraseToDisplay(phraseArray);
   // Recreate the buttons in the keyboard.
   qwerty.addEventListener("click", e => {
     // When a player chooses a letter, add the “chosen” class to that button.
@@ -132,9 +135,7 @@ function resetGame() {
     }
     checkWin();
   });
-  // Generate a new random phrase.
-  getRandomPhraseAsArray(phrases);
-  // Set number misse back to zero.
+  // Set number missed back to zero.
   let missed = 0;
 }
 
